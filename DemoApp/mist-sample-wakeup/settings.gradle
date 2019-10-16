@@ -1,1 +1,3 @@
 include ':app'
+include ':android-framework'
+project(':android-framework').projectDir = new File(settingsDir, '/../../../Android-Framework2/android-framework')

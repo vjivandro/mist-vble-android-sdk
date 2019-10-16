@@ -6,19 +6,14 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-
-import com.github.clans.fab.FloatingActionMenu;
 import com.mist.sample.wakeup.R;
-import com.mist.sample.wakeup.utils.SharedPrefUtils;
 import com.mist.sample.wakeup.utils.Utils;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
@@ -28,10 +23,20 @@ public class HomeFragment extends Fragment {
     private static final String TOKEN_PREF_KEY_NAME = "sdkToken";
     public static final String TAG = HomeFragment.class.getSimpleName();
     // you can replace this text with you sdk token
-    public static String sdkToken = "PPRsreycFghetRLsPKHDTRH71gVDULVC";
 
-    @BindView(R.id.token_menu)
-    FloatingActionMenu fabTokenMenu;
+    //Mist Office Staging
+    public static String sdkToken = "SCdBjQYYUyExpLXTiujfxKmH0dt4hPWw";
+
+    //Target
+    //public static String sdkToken = "PFOKN8KWTcYyES9niP18RPiyQbW0QKhG";
+    // Mist Office
+    //public static String sdkToken = "PTqTykTl4QJDwFEn9EjevfPRvci41xRi";
+
+
+
+//
+//    @BindView(R.id.token_menu)
+//    FloatingActionMenu fabTokenMenu;
 
     private Unbinder unbinder;
     private SdkTokenReceivedListener sdkTokenReceivedListener;
@@ -63,8 +68,6 @@ public class HomeFragment extends Fragment {
 
     @OnClick(R.id.btn_enter)
     public void onClick() {
-        sdkToken = TextUtils.isEmpty(SharedPrefUtils.readSdkToken(getActivity(), TOKEN_PREF_KEY_NAME)) ? sdkToken : SharedPrefUtils.readSdkToken(getActivity(), TOKEN_PREF_KEY_NAME);
-        SharedPrefUtils.saveSdkToken(getActivity(), TOKEN_PREF_KEY_NAME, sdkToken);
         if (Utils.isEmptyString(sdkToken) && getActivity() != null) {
             Snackbar.make(getActivity().findViewById(android.R.id.content), R.string.enter_sdk_token, Snackbar.LENGTH_LONG).show();
         } else if (sdkToken.toUpperCase().charAt(0) == 'P' || sdkToken.toUpperCase().charAt(0) == 'S') {
@@ -74,13 +77,15 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    @OnClick(R.id.add_token_button)
-    public void onClickAddTokenButton() {
-        AddTokenDialogFragment tokenDialogFragment = AddTokenDialogFragment.newInstance();
-        tokenDialogFragment.show(getFragmentManager(), "dialog");
-        tokenDialogFragment.setCancelable(false);
-        fabTokenMenu.close(true);
-    }
+//    @OnClick(R.id.add_token_button)
+//    public void onClickAddTokenButton() {
+//        /*
+//        AddTokenDialogFragment tokenDialogFragment = AddTokenDialogFragment.newInstance();
+//        tokenDialogFragment.show(getFragmentManager(), "dialog");
+//        tokenDialogFragment.setCancelable(false);
+//        fabTokenMenu.close(true);
+//        */
+//    }
 
     @Override
     public void onDestroyView() {
