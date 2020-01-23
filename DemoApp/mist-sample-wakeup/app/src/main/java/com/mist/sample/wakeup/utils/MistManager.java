@@ -107,11 +107,16 @@ public class MistManager implements MSTOrgCredentialsCallback {
                     orgData.getOrgId(), orgData.getSdkSecret());
             mstCentralManager.setEnvironment(Utils.getEnvironment(envType));
             if (appMode.equals(AppMode.FOREGROUND)) {
-                setAppMode(Utils.getConfiguredAppModeParams(AppMode.FOREGROUND,BatteryUsage.HIGH_BATTERY_USAGE_HIGH_ACCURACY));
+                setAppMode(Utils.getConfiguredAppModeParams(AppMode.FOREGROUND, BatteryUsage.HIGH_BATTERY_USAGE_HIGH_ACCURACY));
             } else {
-                setAppMode(Utils.getConfiguredAppModeParams(AppMode.BACKGROUND,BatteryUsage.LOW_BATTERY_USAGE_LOW_ACCURACY));
+                setAppMode(Utils.getConfiguredAppModeParams(AppMode.BACKGROUND, BatteryUsage.LOW_BATTERY_USAGE_LOW_ACCURACY));
             }
             mstCentralManager.setMSTCentralManagerIndoorOnlyListener(indoorOnlyListener);
+            //Marvis
+            mstCentralManager.enableMarvis();
+            mstCentralManager.setMarvisSendInterval(5000);
+            mstCentralManager.setMarvisPassiveTestInterval(1000);
+            mstCentralManager.setMarvisMaxSavedResultsSizeInKB(150);
             mstCentralManager.start();
         } else {
             reconnect();
