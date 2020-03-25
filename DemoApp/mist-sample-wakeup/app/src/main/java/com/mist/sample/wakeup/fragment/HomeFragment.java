@@ -31,7 +31,17 @@ public class HomeFragment extends Fragment {
 
 
     //Salambao Staging
-    public static String sdkToken = "Sjn-dhuDQDOJme6YjfUZHxcABuJt-mRA";
+    //public static String sdkToken = "Sjn-dhuDQDOJme6YjfUZHxcABuJt-mRA";
+
+    //Deeyo Solutions (Production)
+    //public static String sdkToken ="Pn-7Tgw2zlqFPC0yTO8PM5f4HXTWr94o";
+
+    //THE TRUE MIST OFFICE (Production - GCP)
+    //public static String sdkToken ="GXaXAQ4dNIYKuSwCIvQF5K1NjD9Iduhx";
+
+    //THE TRUE MIST OFFICE (Staging - GCP)
+    //public static String sdkToken ="Tp9UfMSJZNzwl4gCAIpZBcl1CbDBs-0H";
+    //public static String sdkToken ="gjNU8ReS6f4O9larOBGDA9Yv9Q7fG2Ix";
 
     //Mist Office Staging
     //public static String sdkToken = "SCdBjQYYUyExpLXTiujfxKmH0dt4hPWw";
@@ -42,6 +52,11 @@ public class HomeFragment extends Fragment {
     // Mist Office
     //public static String sdkToken = "PTqTykTl4QJDwFEn9EjevfPRvci41xRi";
 
+    //Live Demo
+    public static String sdkToken = "P4XdE1dLFQrmW7JU5Qkqplp6vJWTmRPH";
+
+    //Kevin
+    //public static String sdkToken = "Pkd9KWOJpPsh9UbYpNDquDTjPy8x7cIM";
 
     //Deeyo - Remove / Comment out for Walmart Zibra
     @BindView(R.id.token_menu)
@@ -83,7 +98,11 @@ public class HomeFragment extends Fragment {
 
         if (Utils.isEmptyString(sdkToken) && getActivity() != null) {
             Snackbar.make(getActivity().findViewById(android.R.id.content), R.string.enter_sdk_token, Snackbar.LENGTH_LONG).show();
-        } else if (sdkToken.toUpperCase().charAt(0) == 'P' || sdkToken.toUpperCase().charAt(0) == 'S') {
+        } else if (sdkToken.toUpperCase().charAt(0) == 'P'
+                || sdkToken.toUpperCase().charAt(0) == 'S'
+                || sdkToken.toUpperCase().charAt(0) == 'E'
+                || sdkToken.charAt(0) == 'G'
+                || sdkToken.charAt(0) == 'g') {
             sdkTokenReceivedListener.OnSdkTokenReceived(sdkToken);
         } else {
             Toast.makeText(getActivity(), R.string.valid_sdk_token, Toast.LENGTH_SHORT).show();

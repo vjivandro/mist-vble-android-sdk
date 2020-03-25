@@ -91,6 +91,10 @@ public class Utils {
             env = "Kalam";
         } else if (envType.equalsIgnoreCase("S")) {
             env = "Staging";
+        } else if (envType.equals("G")) {
+            env = "GoogleProduction";
+        }else if (envType.equals("g")) {
+            env = "googleStaging";
         } else {
             env = "Production";
         }

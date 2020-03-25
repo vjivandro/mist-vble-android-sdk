@@ -115,6 +115,7 @@ public class MistManager implements MSTOrgCredentialsCallback {
                         0.5,
                         1));
             } else {
+                ///
                 setAppMode(new AppModeParams(AppMode.BACKGROUND,
                         BatteryUsage.LOW_BATTERY_USAGE_LOW_ACCURACY,
                         true,
