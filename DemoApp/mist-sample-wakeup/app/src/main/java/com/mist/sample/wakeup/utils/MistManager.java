@@ -107,49 +107,31 @@ public class MistManager implements MSTOrgCredentialsCallback {
                     orgData.getOrgId(), orgData.getSdkSecret());
             mstCentralManager.setEnvironment(Utils.getEnvironment(envType));
 
+//            if (appMode.equals(AppMode.FOREGROUND)) {
+//                setAppMode(Utils.getConfiguredAppModeParams(AppMode.FOREGROUND, BatteryUsage.HIGH_BATTERY_USAGE_HIGH_ACCURACY));
+//            } else {
+//                setAppMode(Utils.getConfiguredAppModeParams(AppMode.BACKGROUND, BatteryUsage.LOW_BATTERY_USAGE_LOW_ACCURACY));
+//            }
+
             if (appMode.equals(AppMode.FOREGROUND)) {
                 setAppMode(Utils.getConfiguredAppModeParams(AppMode.FOREGROUND, BatteryUsage.HIGH_BATTERY_USAGE_HIGH_ACCURACY));
             } else {
-                setAppMode(Utils.getConfiguredAppModeParams(AppMode.BACKGROUND, BatteryUsage.LOW_BATTERY_USAGE_LOW_ACCURACY));
-            }
-
-            if (appMode.equals(AppMode.FOREGROUND)) {
-//                setAppMode(new AppModeParams(AppMode.FOREGROUND,
-//                        BatteryUsage.HIGH_BATTERY_USAGE_HIGH_ACCURACY,
-//                        true,
-//                        0.5,
-//                        1));
-            } else {
-                ///
                 setAppMode(new AppModeParams(AppMode.BACKGROUND,
                         BatteryUsage.LOW_BATTERY_USAGE_LOW_ACCURACY,
                         true,
-                        720,
-                        0.0001));
+                        0.5,
+                        1.0));
             }
-
-
-//            if (appMode.equals(AppMode.FOREGROUND)) {
-//                setAppMode(new AppModeParams(AppMode.FOREGROUND,
-//                        BatteryUsage.HIGH_BATTERY_USAGE_HIGH_ACCURACY,
-//                        true,
-//                        1440,
-//                        0));
-//            } else {
-//                ///
-//                setAppMode(new AppModeParams(AppMode.BACKGROUND,
-//                        BatteryUsage.LOW_BATTERY_USAGE_LOW_ACCURACY,
-//                        true,
-//                        1440,
-//                        0));
-//            }
             mstCentralManager.setMSTCentralManagerIndoorOnlyListener(indoorOnlyListener);
+
+            mstCentralManager.disableLocation();
+
             //Marvis
-            mstCentralManager.enableMarvis();
-            mstCentralManager.setMarvisSendInterval(3000);
+            //mstCentralManager.disableMarvis();
+            mstCentralManager.setMarvisSendInterval(60000);
             mstCentralManager.setMarvisPassiveTestInterval(1000);
-            mstCentralManager.setMarvisMaxSavedResultsSizeInKB(1000);
-            Log.d(TAG, "Marvis: Start Marvis Foreground");
+            mstCentralManager.setMarvisMaxSavedResultsSizeInKB(1024);
+            Log.d(TAG, "Marvis: MistManager.connect()");
             mstCentralManager.start();
         } else {
             reconnect();
@@ -216,32 +198,30 @@ public class MistManager implements MSTOrgCredentialsCallback {
     }
 
     /**
-     * This method will reconnect he Mist SDK
+     * This method will reconnect the Mist SDK
      */
     private synchronized void reconnect() {
         if (mstCentralManager != null) {
             disconnect();
-//            if (appMode.equals(AppMode.FOREGROUND)) {
-//                setAppMode(new AppModeParams(AppMode.FOREGROUND,
-//                        BatteryUsage.HIGH_BATTERY_USAGE_HIGH_ACCURACY,
-//                        true,
-//                        1440,
-//                        0));
-//            } else {
-//                ///
-//                setAppMode(new AppModeParams(AppMode.BACKGROUND,
-//                        BatteryUsage.LOW_BATTERY_USAGE_LOW_ACCURACY,
-//                        true,
-//                        1440,
-//                        0));
-//            }
+            if (appMode.equals(AppMode.FOREGROUND)) {
+                setAppMode(Utils.getConfiguredAppModeParams(AppMode.FOREGROUND, BatteryUsage.HIGH_BATTERY_USAGE_HIGH_ACCURACY));
+            } else {
+                ///
+                setAppMode(new AppModeParams(AppMode.BACKGROUND,
+                        BatteryUsage.LOW_BATTERY_USAGE_LOW_ACCURACY,
+                        true,
+                        0.5,
+                        1.0));
+            }
             mstCentralManager.setMSTCentralManagerIndoorOnlyListener(indoorOnlyListener);
+            mstCentralManager.disableLocation();
+
             //Marvis
-            mstCentralManager.enableMarvis();
-            mstCentralManager.setMarvisSendInterval(3000);
+            //mstCentralManager.disableMarvis();
+            mstCentralManager.setMarvisSendInterval(60000);
             mstCentralManager.setMarvisPassiveTestInterval(1000);
-            mstCentralManager.setMarvisMaxSavedResultsSizeInKB(1000);
-            Log.d(TAG, "Marvis: Start Marvis Reconnect");
+            mstCentralManager.setMarvisMaxSavedResultsSizeInKB(1024);
+            Log.d(TAG, "Marvis: MistManager.reconnect()");
             mstCentralManager.start();
         }
     }
