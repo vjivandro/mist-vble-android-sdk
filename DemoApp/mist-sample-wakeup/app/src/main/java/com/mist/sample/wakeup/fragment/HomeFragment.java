@@ -34,7 +34,7 @@ public class HomeFragment extends Fragment {
     //public static String sdkToken = "Sjn-dhuDQDOJme6YjfUZHxcABuJt-mRA";
 
     //Deeyo Solutions (Production)
-    //public static String sdkToken ="Pn-7Tgw2zlqFPC0yTO8PM5f4HXTWr94o";
+    public static String sdkToken ="Pn-7Tgw2zlqFPC0yTO8PM5f4HXTWr94o";
 
     //THE TRUE MIST OFFICE (Production - GCP)
     //public static String sdkToken ="GXaXAQ4dNIYKuSwCIvQF5K1NjD9Iduhx";
@@ -53,7 +53,7 @@ public class HomeFragment extends Fragment {
     //public static String sdkToken = "PTqTykTl4QJDwFEn9EjevfPRvci41xRi";
 
     //Live Demo
-    public static String sdkToken = "P4XdE1dLFQrmW7JU5Qkqplp6vJWTmRPH";
+    //public static String sdkToken = "P4XdE1dLFQrmW7JU5Qkqplp6vJWTmRPH";
 
     //Kevin
     //public static String sdkToken = "Pkd9KWOJpPsh9UbYpNDquDTjPy8x7cIM";

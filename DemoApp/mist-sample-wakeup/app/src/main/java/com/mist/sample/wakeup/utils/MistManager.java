@@ -41,6 +41,10 @@ public class MistManager implements MSTOrgCredentialsCallback {
     private volatile MSTCentralManager mstCentralManager;
     private fragmentInteraction fragmentInteractionListener;
 
+    Integer sendInterval = 1000*5;
+    boolean marvisEnabled = true;
+    boolean locationEnabled = true;
+
     private MistManager() {
     }
 
@@ -124,11 +128,14 @@ public class MistManager implements MSTOrgCredentialsCallback {
             }
             mstCentralManager.setMSTCentralManagerIndoorOnlyListener(indoorOnlyListener);
 
-            mstCentralManager.disableLocation();
+            if (!locationEnabled) {
+                mstCentralManager.disableLocation();
+            }
+            if (!marvisEnabled) {
+                mstCentralManager.disableMarvis();
+            }
 
-            //Marvis
-            //mstCentralManager.disableMarvis();
-            mstCentralManager.setMarvisSendInterval(60000);
+            mstCentralManager.setMarvisSendInterval(sendInterval);
             mstCentralManager.setMarvisPassiveTestInterval(1000);
             mstCentralManager.setMarvisMaxSavedResultsSizeInKB(1024);
             Log.d(TAG, "Marvis: MistManager.connect()");
@@ -214,11 +221,14 @@ public class MistManager implements MSTOrgCredentialsCallback {
                         1.0));
             }
             mstCentralManager.setMSTCentralManagerIndoorOnlyListener(indoorOnlyListener);
-            mstCentralManager.disableLocation();
 
-            //Marvis
-            //mstCentralManager.disableMarvis();
-            mstCentralManager.setMarvisSendInterval(60000);
+            if (!locationEnabled) {
+                mstCentralManager.disableLocation();
+            }
+            if (!marvisEnabled) {
+                mstCentralManager.disableMarvis();
+            }
+            mstCentralManager.setMarvisSendInterval(sendInterval);
             mstCentralManager.setMarvisPassiveTestInterval(1000);
             mstCentralManager.setMarvisMaxSavedResultsSizeInKB(1024);
             Log.d(TAG, "Marvis: MistManager.reconnect()");
