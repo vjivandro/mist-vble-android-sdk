@@ -38,7 +38,7 @@ public class Utils {
     public static final String WELCOME_MESSAGE = "Welcome";
     public static final int WELCOME_NOTIFICATION_ID = 99;
     public static final String TOKEN_PREF_KEY_NAME = "sdkToken";
-
+    public static final String START_STRING_KEY_NAME = "startString";
     /**
      * Check Internet is on or off
      */

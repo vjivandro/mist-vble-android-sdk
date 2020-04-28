@@ -25,6 +25,7 @@ import butterknife.Unbinder;
 public class HomeFragment extends Fragment {
 
     private static final String TOKEN_PREF_KEY_NAME = "sdkToken";
+    private static final String START_STRING = "startString";
     public static final String TAG = HomeFragment.class.getSimpleName();
     // you can replace this text with your sdk token
     //public static String sdkToken = "";
@@ -34,7 +35,7 @@ public class HomeFragment extends Fragment {
     //public static String sdkToken = "Sjn-dhuDQDOJme6YjfUZHxcABuJt-mRA";
 
     //Deeyo Solutions (Production)
-    public static String sdkToken ="Pn-7Tgw2zlqFPC0yTO8PM5f4HXTWr94o";
+    //public static String sdkToken ="Pn-7Tgw2zlqFPC0yTO8PM5f4HXTWr94o";
 
     //THE TRUE MIST OFFICE (Production - GCP)
     //public static String sdkToken ="GXaXAQ4dNIYKuSwCIvQF5K1NjD9Iduhx";
@@ -53,7 +54,7 @@ public class HomeFragment extends Fragment {
     //public static String sdkToken = "PTqTykTl4QJDwFEn9EjevfPRvci41xRi";
 
     //Live Demo
-    //public static String sdkToken = "P4XdE1dLFQrmW7JU5Qkqplp6vJWTmRPH";
+    public static String sdkToken = "P4XdE1dLFQrmW7JU5Qkqplp6vJWTmRPH";
 
     //Kevin
     //public static String sdkToken = "Pkd9KWOJpPsh9UbYpNDquDTjPy8x7cIM";
@@ -91,11 +92,11 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    @OnClick(R.id.btn_enter)
-    public void onClick() {
+    @OnClick(R.id.btn_location)
+    public void onClickLocation() {
         sdkToken = TextUtils.isEmpty(SharedPrefUtils.readSdkToken(getActivity(), TOKEN_PREF_KEY_NAME)) ? sdkToken : SharedPrefUtils.readSdkToken(getActivity(), TOKEN_PREF_KEY_NAME);
         SharedPrefUtils.saveSdkToken(getActivity(), TOKEN_PREF_KEY_NAME, sdkToken);
-
+        SharedPrefUtils.saveSdkToken(getActivity(), START_STRING, "location");
         if (Utils.isEmptyString(sdkToken) && getActivity() != null) {
             Snackbar.make(getActivity().findViewById(android.R.id.content), R.string.enter_sdk_token, Snackbar.LENGTH_LONG).show();
         } else if (sdkToken.toUpperCase().charAt(0) == 'P'
@@ -103,7 +104,43 @@ public class HomeFragment extends Fragment {
                 || sdkToken.toUpperCase().charAt(0) == 'E'
                 || sdkToken.charAt(0) == 'G'
                 || sdkToken.charAt(0) == 'g') {
-            sdkTokenReceivedListener.OnSdkTokenReceived(sdkToken);
+            sdkTokenReceivedListener.OnSdkTokenReceived(sdkToken,"location");
+        } else {
+            Toast.makeText(getActivity(), R.string.valid_sdk_token, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @OnClick(R.id.btn_loaction_marvis)
+    public void onClickLocationMarvis() {
+        sdkToken = TextUtils.isEmpty(SharedPrefUtils.readSdkToken(getActivity(), TOKEN_PREF_KEY_NAME)) ? sdkToken : SharedPrefUtils.readSdkToken(getActivity(), TOKEN_PREF_KEY_NAME);
+        SharedPrefUtils.saveSdkToken(getActivity(), TOKEN_PREF_KEY_NAME, sdkToken);
+        SharedPrefUtils.saveSdkToken(getActivity(), START_STRING, "locationMarvis");
+        if (Utils.isEmptyString(sdkToken) && getActivity() != null) {
+            Snackbar.make(getActivity().findViewById(android.R.id.content), R.string.enter_sdk_token, Snackbar.LENGTH_LONG).show();
+        } else if (sdkToken.toUpperCase().charAt(0) == 'P'
+                || sdkToken.toUpperCase().charAt(0) == 'S'
+                || sdkToken.toUpperCase().charAt(0) == 'E'
+                || sdkToken.charAt(0) == 'G'
+                || sdkToken.charAt(0) == 'g') {
+            sdkTokenReceivedListener.OnSdkTokenReceived(sdkToken, "locationMarvis");
+        } else {
+            Toast.makeText(getActivity(), R.string.valid_sdk_token, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @OnClick(R.id.btn_marvis)
+    public void onClickMarvis() {
+        sdkToken = TextUtils.isEmpty(SharedPrefUtils.readSdkToken(getActivity(), TOKEN_PREF_KEY_NAME)) ? sdkToken : SharedPrefUtils.readSdkToken(getActivity(), TOKEN_PREF_KEY_NAME);
+        SharedPrefUtils.saveSdkToken(getActivity(), TOKEN_PREF_KEY_NAME, sdkToken);
+        SharedPrefUtils.saveSdkToken(getActivity(), START_STRING, "marvis");
+        if (Utils.isEmptyString(sdkToken) && getActivity() != null) {
+            Snackbar.make(getActivity().findViewById(android.R.id.content), R.string.enter_sdk_token, Snackbar.LENGTH_LONG).show();
+        } else if (sdkToken.toUpperCase().charAt(0) == 'P'
+                || sdkToken.toUpperCase().charAt(0) == 'S'
+                || sdkToken.toUpperCase().charAt(0) == 'E'
+                || sdkToken.charAt(0) == 'G'
+                || sdkToken.charAt(0) == 'g') {
+            sdkTokenReceivedListener.OnSdkTokenReceived(sdkToken, "marvis");
         } else {
             Toast.makeText(getActivity(), R.string.valid_sdk_token, Toast.LENGTH_SHORT).show();
         }
@@ -128,6 +165,6 @@ public class HomeFragment extends Fragment {
 
     //interface to send the token to the parent activity
     public interface SdkTokenReceivedListener {
-        void OnSdkTokenReceived(String sdkToken);
+        void OnSdkTokenReceived(String sdkToken, String start);
     }
 }

@@ -41,11 +41,12 @@ public class MistManager implements MSTOrgCredentialsCallback {
     private volatile MSTCentralManager mstCentralManager;
     private fragmentInteraction fragmentInteractionListener;
 
-    Integer sendInterval = 1000*5;
-    boolean marvisEnabled = true;
-    boolean locationEnabled = true;
+    int sendInterval = 1000*3*1;
+    public boolean marvisEnabled;
+    public boolean locationEnabled;
 
     private MistManager() {
+
     }
 
     public void setFragmentInteractionListener(fragmentInteraction fragmentInteractionListener) {
@@ -63,11 +64,31 @@ public class MistManager implements MSTOrgCredentialsCallback {
      * @return
      */
 
-    public static MistManager newInstance(Context context) {
+    public static MistManager newInstance(Context context, String start) {
         contextWeakReference = new WeakReference<Context>(context);
         if (mistManager == null) {
             mistManager = new MistManager();
         }
+        if (start != null) {
+            switch (start) {
+                case "location":
+                    mistManager.marvisEnabled = false;
+                    mistManager.locationEnabled = true;
+                    break;
+                case "locationMarvis":
+                    mistManager.marvisEnabled = true;
+                    mistManager.locationEnabled = true;
+                    break;
+                case "marvis":
+                    mistManager.marvisEnabled = true;
+                    mistManager.locationEnabled = false;
+                    break;
+                default:
+                    mistManager.marvisEnabled = true;
+                    mistManager.locationEnabled = true;
+            }
+        }
+
         return mistManager;
     }
 

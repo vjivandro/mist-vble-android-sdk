@@ -69,6 +69,15 @@ public class SharedPrefUtils {
         return getPreferences(context).getString(key, EMPTY_STRING);
     }
 
+    //saving selected button to sharedpref
+    public static void saveStartString(Context context, String key, String value) {
+        getEditor(context).putString(key, value).apply();
+    }
+
+    public static String readStartString(Context context, String key) {
+        return getPreferences(context).getString(key, EMPTY_STRING);
+    }
+
     public static boolean isAppAlive(Context context) {
         return readBoolean(context, context.getString(R.string.pref_app_state), false);
     }

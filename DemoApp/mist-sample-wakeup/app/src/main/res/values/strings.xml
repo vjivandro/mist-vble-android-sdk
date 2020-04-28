@@ -7,6 +7,8 @@
     <string name="pref_should_welcome">shouldWelcome</string>
     <string name="floorplan_image">floorplan image</string>
     <string name="load_map">Load Map</string>
+    <string name="load_map_and_start_marvis">Load Map and Start Marvis</string>
+    <string name="start_marvis">Start Marvis</string>
     <string name="valid_sdk_token">Please enter a valid sdk Token</string>
     <string name="enter_sdk_token">Please enter a sdk Token</string>
     <string name="add_sdk_token">Add SDK Token</string>

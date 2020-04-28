@@ -34,12 +34,12 @@ public class MistSdkBackgroundService extends JobService {
 
     private void doWork() {
         String sdkToken = SharedPrefUtils.readSdkToken(getApplication(), Utils.TOKEN_PREF_KEY_NAME);
-
+        String startString = SharedPrefUtils.readSdkToken(getApplication(), Utils.START_STRING_KEY_NAME);
         if (sdkToken != null) {
-            MistManager.newInstance((MainApplication) getApplication()).
+            MistManager.newInstance((MainApplication) getApplication(),startString).
                     init(sdkToken, null, AppMode.BACKGROUND);
 
-            MistManager.newInstance((MainApplication) getApplication()).
+            MistManager.newInstance((MainApplication) getApplication(),startString).
                     setAppMode(Utils.getConfiguredAppModeParams(AppMode.BACKGROUND,BatteryUsage.LOW_BATTERY_USAGE_LOW_ACCURACY));
         }
     }

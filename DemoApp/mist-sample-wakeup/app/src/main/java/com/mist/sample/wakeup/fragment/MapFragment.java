@@ -81,8 +81,11 @@ public class MapFragment extends Fragment implements MSTCentralManagerIndoorOnly
     public static final String TAG = MapFragment.class.getSimpleName();
     private static final int PERMISSION_REQUEST_FINE_LOCATION = 1;
     private static final String SDK_TOKEN = "sdkToken";
+    private static final String START_STRING = "startString";
+    private static final String SV = "startString";
     private MainApplication mainApplication;
     private String sdkToken;
+    private String startString;
     private String floorPlanImageUrl = "";
     private MSTPoint mstPoint = null;
     private boolean addedMap = false;
@@ -125,9 +128,10 @@ public class MapFragment extends Fragment implements MSTCentralManagerIndoorOnly
     ZoomLayout zoomLayout;
 
 
-    public static MapFragment newInstance(String sdkToken) {
+    public static MapFragment newInstance(String sdkToken, String start) {
         Bundle bundle = new Bundle();
         bundle.putString(SDK_TOKEN, sdkToken);
+        bundle.putString(START_STRING, start);
         MapFragment mapFragment = new MapFragment();
         mapFragment.setArguments(bundle);
         return mapFragment;
@@ -150,6 +154,7 @@ public class MapFragment extends Fragment implements MSTCentralManagerIndoorOnly
             mainApplication = (MainApplication) getActivity().getApplication();
         if (getArguments() != null)
             sdkToken = getArguments().getString(SDK_TOKEN);
+            startString = getArguments().getString(START_STRING);
         if (havePermissions()) {
             buildGoogleApiClient();
         }
@@ -162,7 +167,7 @@ public class MapFragment extends Fragment implements MSTCentralManagerIndoorOnly
         sdkHandlerThread = new HandlerThread("SDKHandler");
         sdkHandlerThread.start();
         sdkHandler = new Handler(sdkHandlerThread.getLooper());
-        MistManager.newInstance(mainApplication).setFragmentInteractionListener(this);
+        MistManager.newInstance(mainApplication,startString).setFragmentInteractionListener(this);
     }
 
     @Override
@@ -181,8 +186,8 @@ public class MapFragment extends Fragment implements MSTCentralManagerIndoorOnly
             Log.e(TAG, e.getMessage());
         }
         //disconnecting the Mist sdk, to make sure there is no prior active instance
-        MistManager.newInstance(mainApplication).disconnect();
-        MistManager.newInstance(mainApplication).
+        MistManager.newInstance(mainApplication,startString).disconnect();
+        MistManager.newInstance(mainApplication,startString).
                 setAppMode(Utils.getConfiguredAppModeParams(AppMode.FOREGROUND,BatteryUsage.HIGH_BATTERY_USAGE_HIGH_ACCURACY));
 
         //initializing the Mist sdk
@@ -194,8 +199,8 @@ public class MapFragment extends Fragment implements MSTCentralManagerIndoorOnly
     public void onStop() {
         super.onStop();
         //stopping the Mist sdk
-        MistManager.newInstance(mainApplication).disconnect();
-        MistManager.newInstance(mainApplication).
+        MistManager.newInstance(mainApplication,startString).disconnect();
+        MistManager.newInstance(mainApplication,startString).
                 setAppMode(Utils.getConfiguredAppModeParams(AppMode.BACKGROUND,BatteryUsage.LOW_BATTERY_USAGE_LOW_ACCURACY));
         sdkHandler.postDelayed(new Runnable() {
             @Override
@@ -297,7 +302,7 @@ public class MapFragment extends Fragment implements MSTCentralManagerIndoorOnly
 
     //initializing the Mist sdk with sdkToken
     private void runMISTSDK() {
-        MistManager mistManager = MistManager.newInstance(mainApplication);
+        MistManager mistManager = MistManager.newInstance(mainApplication, startString);
         mistManager.init(sdkToken, this, AppMode.FOREGROUND);
     }
 
@@ -773,7 +778,7 @@ public class MapFragment extends Fragment implements MSTCentralManagerIndoorOnly
             Log.e(TAG, e.getMessage());
         }
         //disconnecting the Mist sdk, to make sure there is no prior active instance
-        MistManager.newInstance(mainApplication).destroy();
+        MistManager.newInstance(mainApplication, startString).destroy();
     }
 
 }

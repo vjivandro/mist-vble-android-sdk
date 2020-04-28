@@ -62,10 +62,11 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.SdkT
 
     /**
      * This method is settingup the Map scrren with passing the SDK token needed by it for Mist SDK to start working
+     * start contains information on starting Marvis as well
      *
      * @param sdkToken sdk token used for enrollment
      */
-    private void setUpMapFragment(String sdkToken) {
+    private void setUpMapFragment(String sdkToken, String start) {
         Fragment mapFragment = getSupportFragmentManager().
                 findFragmentByTag(MapFragment.TAG);
 
@@ -73,11 +74,22 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.SdkT
             getSupportFragmentManager().
                     beginTransaction().
                     replace(R.id.frame_fragment,
-                            MapFragment.newInstance(sdkToken), MapFragment.TAG).
+                            MapFragment.newInstance(sdkToken,start), MapFragment.TAG).
                     addToBackStack(MapFragment.TAG).
                     commit();
         }
     }
+
+
+    /**
+     * This method is settingup the Map scrren with passing the SDK token needed by it for Mist SDK to start working
+     *
+     * @param sdkToken sdk token used for enrollment
+     */
+    private void setUpMarvisFragment(String sdkToken) {
+
+    }
+
 
     @Override
     public void onSdkTokenSaved(String token) {
@@ -85,8 +97,18 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.SdkT
     }
 
     @Override
-    public void OnSdkTokenReceived(String sdkToken) {
-        setUpMapFragment(sdkToken);
+    public void OnSdkTokenReceived(String sdkToken, String start) {
+
+        switch (start) {
+            case "location":
+            case "locationMarvis":
+                setUpMapFragment(sdkToken, start);
+                break;
+            case "marvis":
+
+                break;
+        }
+
     }
 
     @Override
