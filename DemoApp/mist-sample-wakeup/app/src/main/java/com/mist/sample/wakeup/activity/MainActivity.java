@@ -10,6 +10,7 @@ import com.mist.sample.wakeup.R;
 import com.mist.sample.wakeup.fragment.AddTokenDialogFragment;
 import com.mist.sample.wakeup.fragment.HomeFragment;
 import com.mist.sample.wakeup.fragment.MapFragment;
+import com.mist.sample.wakeup.fragment.MarvisFragment;
 import com.mist.sample.wakeup.utils.SharedPrefUtils;
 
 public class MainActivity extends AppCompatActivity implements HomeFragment.SdkTokenReceivedListener,
@@ -82,12 +83,22 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.SdkT
 
 
     /**
-     * This method is settingup the Map scrren with passing the SDK token needed by it for Mist SDK to start working
+     * This method is setting up the Marvis screen with passing the SDK token needed by it for Marvis SDK to start working
      *
-     * @param sdkToken sdk token used for enrollment
+     * @
      */
     private void setUpMarvisFragment(String sdkToken) {
+        Fragment marvisFragment = getSupportFragmentManager().
+                findFragmentByTag(MarvisFragment.TAG);
 
+        if (marvisFragment == null) {
+            getSupportFragmentManager().
+                    beginTransaction().
+                    replace(R.id.frame_fragment,
+                            MarvisFragment.newInstance(sdkToken), MarvisFragment.TAG).
+                    addToBackStack(MarvisFragment.TAG).
+                    commit();
+        }
     }
 
 
@@ -105,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.SdkT
                 setUpMapFragment(sdkToken, start);
                 break;
             case "marvis":
-
+                setUpMarvisFragment(sdkToken);
                 break;
         }
 
