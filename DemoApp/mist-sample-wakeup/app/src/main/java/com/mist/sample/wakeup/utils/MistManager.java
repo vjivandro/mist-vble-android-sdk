@@ -41,7 +41,7 @@ public class MistManager implements MSTOrgCredentialsCallback {
     private volatile MSTCentralManager mstCentralManager;
     private fragmentInteraction fragmentInteractionListener;
 
-    int sendInterval = 1000*3*1;
+    int sendInterval = 1000*30;
     public boolean marvisEnabled;
     public boolean locationEnabled;
 
@@ -64,7 +64,7 @@ public class MistManager implements MSTOrgCredentialsCallback {
      * @return
      */
 
-    public static MistManager newInstance(Context context, String start) {
+    public static MistManager mistManagerInstance(Context context, String start) {
         contextWeakReference = new WeakReference<Context>(context);
         if (mistManager == null) {
             mistManager = new MistManager();
@@ -72,18 +72,22 @@ public class MistManager implements MSTOrgCredentialsCallback {
         if (start != null) {
             switch (start) {
                 case "location":
+                    Log.d(TAG, "DebugLog: mistManagerInstance() - location ");
                     mistManager.marvisEnabled = false;
                     mistManager.locationEnabled = true;
                     break;
                 case "locationMarvis":
+                    Log.d(TAG, "DebugLog: mistManagerInstance() - locationMarvis ");
                     mistManager.marvisEnabled = true;
                     mistManager.locationEnabled = true;
                     break;
                 case "marvis":
+                    Log.d(TAG, "DebugLog: mistManagerInstance() - marvis ");
                     mistManager.marvisEnabled = true;
                     mistManager.locationEnabled = false;
                     break;
                 default:
+                    Log.d(TAG, "DebugLog: mistManagerInstance() - locationMarvis (default)");
                     mistManager.marvisEnabled = true;
                     mistManager.locationEnabled = true;
             }
@@ -110,6 +114,7 @@ public class MistManager implements MSTOrgCredentialsCallback {
             }
             orgData = SharedPrefUtils.readConfig(contextWeakReference.get(), sdkToken);
             if (orgData == null || orgData.getSdkSecret() == null || orgData.getSdkSecret().isEmpty()) {
+                Log.d(TAG, "DebugLog: Enrolling device using SDK token: "+ sdkToken);
                 MSTOrgCredentialsManager.enrollDeviceWithToken(contextWeakReference.get(), sdkToken, this);
 
             } else {
@@ -159,7 +164,7 @@ public class MistManager implements MSTOrgCredentialsCallback {
             mstCentralManager.setMarvisSendInterval(sendInterval);
             mstCentralManager.setMarvisPassiveTestInterval(1000);
             mstCentralManager.setMarvisMaxSavedResultsSizeInKB(1024);
-            Log.d(TAG, "Marvis: MistManager.connect()");
+            Log.d(TAG, "DebugLog: MistManager.connect()");
             mstCentralManager.start();
         } else {
             reconnect();
@@ -189,6 +194,7 @@ public class MistManager implements MSTOrgCredentialsCallback {
     @Override
     public void onReceivedSecret(String orgName, String orgID, String sdkSecret, String error, String envType) {
         if (!TextUtils.isEmpty(sdkSecret) && !TextUtils.isEmpty(orgID) && !TextUtils.isEmpty(sdkSecret)) {
+            Log.d(TAG, "DebugLog: Received Org  ID: "+ orgID);
             saveConfig(orgName, orgID, sdkSecret, envType);
             connect(indoorOnlyListener, appMode);
         } else {
@@ -252,7 +258,7 @@ public class MistManager implements MSTOrgCredentialsCallback {
             mstCentralManager.setMarvisSendInterval(sendInterval);
             mstCentralManager.setMarvisPassiveTestInterval(1000);
             mstCentralManager.setMarvisMaxSavedResultsSizeInKB(1024);
-            Log.d(TAG, "Marvis: MistManager.reconnect()");
+            Log.d(TAG, "DebugLog: MistManager.reconnect()");
             mstCentralManager.start();
         }
     }
@@ -262,7 +268,7 @@ public class MistManager implements MSTOrgCredentialsCallback {
      */
     public synchronized void destroy() {
         if (mstCentralManager != null) {
-            Log.d(TAG, "Marvis: MSTCentralManager destroyed");
+            Log.d(TAG, "DebugLog: MSTCentralManager destroyed");
             mstCentralManager.stop();
             mstCentralManager = null;
         }

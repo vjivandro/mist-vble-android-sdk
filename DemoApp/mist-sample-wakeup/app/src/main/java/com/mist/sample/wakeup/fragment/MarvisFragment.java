@@ -117,7 +117,7 @@ public class MarvisFragment extends Fragment implements MSTCentralManagerIndoorO
         sdkHandlerThread = new HandlerThread("SDKHandler");
         sdkHandlerThread.start();
         sdkHandler = new Handler(sdkHandlerThread.getLooper());
-        MistManager.newInstance(mainApplication,START_STRING).setFragmentInteractionListener(this);
+        MistManager.mistManagerInstance(mainApplication,START_STRING).setFragmentInteractionListener(this);
     }
 
     @Override
@@ -136,8 +136,8 @@ public class MarvisFragment extends Fragment implements MSTCentralManagerIndoorO
             Log.e(TAG, e.getMessage());
         }
         //disconnecting the Mist sdk, to make sure there is no prior active instance
-        MistManager.newInstance(mainApplication,START_STRING).disconnect();
-        MistManager.newInstance(mainApplication,START_STRING).
+        MistManager.mistManagerInstance(mainApplication,START_STRING).disconnect();
+        MistManager.mistManagerInstance(mainApplication,START_STRING).
                 setAppMode(Utils.getConfiguredAppModeParams(AppMode.FOREGROUND, BatteryUsage.HIGH_BATTERY_USAGE_HIGH_ACCURACY));
 
         //initializing the Mist sdk
@@ -149,8 +149,8 @@ public class MarvisFragment extends Fragment implements MSTCentralManagerIndoorO
     public void onStop() {
         super.onStop();
         //stopping the Mist sdk
-        MistManager.newInstance(mainApplication,START_STRING).disconnect();
-        MistManager.newInstance(mainApplication,START_STRING).
+        MistManager.mistManagerInstance(mainApplication,START_STRING).disconnect();
+        MistManager.mistManagerInstance(mainApplication,START_STRING).
                 setAppMode(Utils.getConfiguredAppModeParams(AppMode.BACKGROUND,BatteryUsage.LOW_BATTERY_USAGE_LOW_ACCURACY));
         sdkHandler.postDelayed(new Runnable() {
             @Override
@@ -189,7 +189,7 @@ public class MarvisFragment extends Fragment implements MSTCentralManagerIndoorO
             Log.e(TAG, e.getMessage());
         }
         //disconnecting the Mist sdk, to make sure there is no prior active instance
-        MistManager.newInstance(mainApplication, START_STRING).destroy();
+        MistManager.mistManagerInstance(mainApplication, START_STRING).destroy();
     }
 
 
@@ -304,7 +304,7 @@ public class MarvisFragment extends Fragment implements MSTCentralManagerIndoorO
 
     //initializing the Mist sdk with sdkToken
     private void runMISTSDK() {
-        MistManager mistManager = MistManager.newInstance(mainApplication, START_STRING);
+        MistManager mistManager = MistManager.mistManagerInstance(mainApplication, START_STRING);
         mistManager.init(sdkToken, this, AppMode.FOREGROUND);
     }
 
@@ -423,7 +423,7 @@ public class MarvisFragment extends Fragment implements MSTCentralManagerIndoorO
 
     @Override
     public void onRelativeLocationUpdated(MSTPoint relativeLocation, MSTMap[] maps, Date dateUpdated) {
-
+        Log.d(TAG, "DebugLog: Update X: "+relativeLocation.getX()+"  Y: "+relativeLocation.getY() + "Marvis Only");
     }
 
     @Override

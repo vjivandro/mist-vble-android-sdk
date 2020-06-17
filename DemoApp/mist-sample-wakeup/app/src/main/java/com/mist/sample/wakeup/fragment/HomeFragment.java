@@ -46,7 +46,7 @@ public class HomeFragment extends Fragment {
 
     //Mist Office Staging
     //public static String sdkToken = "SCdBjQYYUyExpLXTiujfxKmH0dt4hPWw";
-    
+
 
     // Mist Office
     //public static String sdkToken = "PTqTykTl4QJDwFEn9EjevfPRvci41xRi";

@@ -167,7 +167,7 @@ public class MapFragment extends Fragment implements MSTCentralManagerIndoorOnly
         sdkHandlerThread = new HandlerThread("SDKHandler");
         sdkHandlerThread.start();
         sdkHandler = new Handler(sdkHandlerThread.getLooper());
-        MistManager.newInstance(mainApplication,startString).setFragmentInteractionListener(this);
+        MistManager.mistManagerInstance(mainApplication,startString).setFragmentInteractionListener(this);
     }
 
     @Override
@@ -186,8 +186,8 @@ public class MapFragment extends Fragment implements MSTCentralManagerIndoorOnly
             Log.e(TAG, e.getMessage());
         }
         //disconnecting the Mist sdk, to make sure there is no prior active instance
-        MistManager.newInstance(mainApplication,startString).disconnect();
-        MistManager.newInstance(mainApplication,startString).
+        MistManager.mistManagerInstance(mainApplication,startString).disconnect();
+        MistManager.mistManagerInstance(mainApplication,startString).
                 setAppMode(Utils.getConfiguredAppModeParams(AppMode.FOREGROUND,BatteryUsage.HIGH_BATTERY_USAGE_HIGH_ACCURACY));
 
         //initializing the Mist sdk
@@ -199,8 +199,8 @@ public class MapFragment extends Fragment implements MSTCentralManagerIndoorOnly
     public void onStop() {
         super.onStop();
         //stopping the Mist sdk
-        MistManager.newInstance(mainApplication,startString).disconnect();
-        MistManager.newInstance(mainApplication,startString).
+        MistManager.mistManagerInstance(mainApplication,startString).disconnect();
+        MistManager.mistManagerInstance(mainApplication,startString).
                 setAppMode(Utils.getConfiguredAppModeParams(AppMode.BACKGROUND,BatteryUsage.LOW_BATTERY_USAGE_LOW_ACCURACY));
         sdkHandler.postDelayed(new Runnable() {
             @Override
@@ -302,7 +302,7 @@ public class MapFragment extends Fragment implements MSTCentralManagerIndoorOnly
 
     //initializing the Mist sdk with sdkToken
     private void runMISTSDK() {
-        MistManager mistManager = MistManager.newInstance(mainApplication, startString);
+        MistManager mistManager = MistManager.mistManagerInstance(mainApplication, startString);
         mistManager.init(sdkToken, this, AppMode.FOREGROUND);
     }
 
@@ -387,6 +387,7 @@ public class MapFragment extends Fragment implements MSTCentralManagerIndoorOnly
     public void onRelativeLocationUpdated(MSTPoint relativeLocation, MSTMap[] maps, Date dateUpdated) {
         if (relativeLocation != null && maps != null) {
             mstPoint = relativeLocation;
+            Log.d(TAG, "DebugLog: Update X: "+mstPoint.getX()+"  Y: "+mstPoint.getY() +" onRelativeLocationUpdated()");
             updateRelativeLocation();
         }
     }
@@ -778,7 +779,7 @@ public class MapFragment extends Fragment implements MSTCentralManagerIndoorOnly
             Log.e(TAG, e.getMessage());
         }
         //disconnecting the Mist sdk, to make sure there is no prior active instance
-        MistManager.newInstance(mainApplication, startString).destroy();
+        MistManager.mistManagerInstance(mainApplication, startString).destroy();
     }
 
 }

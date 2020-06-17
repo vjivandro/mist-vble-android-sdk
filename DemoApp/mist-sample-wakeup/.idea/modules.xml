@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../../../Android-Framework2/android-framework/android-framework.iml" filepath="$PROJECT_DIR$/../../../Android-Framework2/android-framework/android-framework.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mist-sample-wakeup.iml" filepath="$PROJECT_DIR$/mist-sample-wakeup.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../../Android-Framework2/android-framework/android-framework.iml" filepath="$PROJECT_DIR$/../../../Android-Framework2/android-framework/android-framework.iml" group="mist-sample-wakeup/android-framework" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="mist-sample-wakeup/app" />
+      <module fileurl="file://$PROJECT_DIR$/mist-sample-wakeup.iml" filepath="$PROJECT_DIR$/mist-sample-wakeup.iml" group="mist-sample-wakeup" />
     </modules>
   </component>
 </project>
